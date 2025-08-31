@@ -1,0 +1,33 @@
+.container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 400px;
+}
+
+span {
+  position: absolute;
+  bottom: 70px;
+  right: 10px;
+  font-size: 12px;
+  color: grey;
+}
+
+span.warning {
+  color: rgb(228, 85, 85);
+}
+
+button {
+  padding: 10px;
+  cursor: pointer;
+  background-color: rgb(32, 73, 169);
+  border: none;
+  border-radius: 8px;
+  color: white;
+}
+
+button.disabled {
+  opacity: 0.4;
+  pointer-events: none;
+}
