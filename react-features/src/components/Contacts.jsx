@@ -3,9 +3,10 @@ import React, { useEffect, useState } from "react";
 const Contacts = () => {
   const [userData, setUserData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [searchText, setSearchText] = useState('');
 
   const itemsPerPage = 10;
-  const totalPages = Math.ceil(userData.length / itemsPerPage);
+  // const totalPages = Math.ceil(userData.length / itemsPerPage);
 
   useEffect(() => {
     getUserData();
@@ -23,18 +24,27 @@ const Contacts = () => {
     }
   }
 
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchText]);
+
+   const filteredData = userData.filter((user) =>
+    user.firstName.toLowerCase().includes(searchText.toLowerCase())
+  );
+   const totalPages = Math.ceil(filteredData.length / itemsPerPage);
   const changePage = (page) => {
     if (page >= 1 && page <= totalPages) setCurrentPage(page);
   };
 
   const start = (currentPage - 1) * itemsPerPage;
-  const paginatedData = userData.slice(start, start + itemsPerPage);
+  const paginatedData = filteredData.slice(start, start + itemsPerPage);
 
   return (
     <>
+      <input type="text" value={searchText} onChange={(e) => setSearchText(e.target.value)} />
       {paginatedData.map((data) => (
         <div key={data.id}>{data.firstName}</div>
-      ))}
+      ))} 
 
       <div className="flex gap-3">
         <button disabled={currentPage === 1} className={`cursor-pointer${currentPage === 1? ' disabled': ''}`} onClick={() => changePage(currentPage - 1)}>
